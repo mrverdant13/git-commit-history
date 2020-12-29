@@ -1,9 +1,14 @@
 <template>
   <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
+    <router-link
+      v-for="route in $router.getRoutes()"
+      :key="route.name"
+      :to="route.path"
+    >
+      {{ route.name }}
+    </router-link>
   </div>
-  <router-view/>
+  <router-view />
 </template>
 
 <style>
