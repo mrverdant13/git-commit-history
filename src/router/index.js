@@ -1,11 +1,17 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
+import CommitHistory from '../views/CommitHistory.vue'
 
 const routes = [
   {
     path: '/',
     name: 'Home',
-    component: Home
+    component: Home,
+  },
+  {
+    path: '/commit-history',
+    name: 'CommitHistory',
+    component: CommitHistory,
   },
 ]
 
