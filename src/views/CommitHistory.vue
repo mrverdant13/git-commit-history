@@ -1,5 +1,8 @@
 <template>
-  <div id="commit-history" class="flex h-full w-full p-6">
+  <div
+    id="commit-history"
+    class="flex flex-col h-full m-auto p-4 xl:max-w-screen-xl xl:max-w-screen-xl:p-0"
+  >
     <div class="w-36">
       <Dropdown
         @item-selected="onBranchSelected"
@@ -8,6 +11,10 @@
         :itemLabelBuilder="(item) => item.name"
       />
     </div>
+    <div v-if="selectedBranch !== null" class="mt-4">
+      <CommitsList :commitsData="commitsData" />
+    </div>
+    <div v-else class="m-auto text-2xl text-center">Select a repo branch.</div>
   </div>
 </template>
 
@@ -17,25 +24,44 @@ import { onMounted, ref } from "vue";
 import axios from "axios";
 
 import Dropdown from "../components/Dropdown";
+import CommitsList from "../components/CommitsList";
 
 export default {
   name: "CommitHistory",
 
-  components: { Dropdown },
+  components: {
+    Dropdown,
+    CommitsList,
+  },
 
   setup() {
-    // Data
-    const branchesData = ref([]);
-
-    // Methods
-    function onBranchSelected(branchData) {
-      console.log(branchData);
-    }
     async function updateBranches() {
       const { data } = await axios.get(
         `https://api.github.com/repos/${process.env.VUE_APP_REPO_OWNER}/${process.env.VUE_APP_REPO_NAME}/branches`
       );
       branchesData.value = data;
+    }
+    async function updateCommitsData() {
+      const { data } = await axios.get(
+        `https://api.github.com/repos/${process.env.VUE_APP_REPO_OWNER}/${process.env.VUE_APP_REPO_NAME}/commits`,
+        {
+          params: {
+            sha: selectedBranch.value.name,
+          },
+        }
+      );
+      commitsData.value = data;
+    }
+
+    // Data
+    const branchesData = ref([]);
+    const selectedBranch = ref(null);
+    const commitsData = ref([]);
+
+    // Methods
+    function onBranchSelected(branchData) {
+      selectedBranch.value = branchData;
+      updateCommitsData();
     }
 
     // Lifecycle Hooks
@@ -46,9 +72,10 @@ export default {
     return {
       // Data
       branchesData,
+      selectedBranch,
+      commitsData,
       // Methods
       onBranchSelected,
-      updateBranches,
     };
   },
 };
