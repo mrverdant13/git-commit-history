@@ -1,9 +1,10 @@
 <template>
   <div
     id="commit-history"
-    class="flex flex-col h-full m-auto p-4 xl:max-w-screen-xl xl:p-0"
+    class="flex flex-col h-full m-auto pt-8 xl:max-w-screen-xl"
   >
-    <div class="w-36">
+    <h2 class="font-bold mb-2">Branch</h2>
+    <div class="w-min">
       <Dropdown
         @item-selected="onBranchSelected"
         hint="branch"
@@ -11,10 +12,13 @@
         :itemLabelBuilder="(item) => item.name"
       />
     </div>
-    <div v-if="selectedBranch !== null" class="mt-4">
+    <div v-if="selectedBranch !== null" class="mx-6">
+      <h2 class="font-bold mt-8 mb-2">Commit history</h2>
       <CommitsList :commitsData="commitsData" />
     </div>
-    <div v-else class="m-auto text-2xl text-center">Select a repo branch.</div>
+    <div v-else class="m-auto text-2xl text-center max-h-full">
+      Select a repo branch.
+    </div>
   </div>
 </template>
 
