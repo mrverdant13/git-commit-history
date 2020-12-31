@@ -1,7 +1,7 @@
 <template>
   <div
     id="commit-history"
-    class="flex flex-col h-full m-auto p-4 xl:max-w-screen-xl xl:max-w-screen-xl:p-0"
+    class="flex flex-col h-full m-auto p-4 xl:max-w-screen-xl xl:p-0"
   >
     <div class="w-36">
       <Dropdown
