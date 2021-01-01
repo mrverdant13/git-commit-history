@@ -14,7 +14,7 @@
     </div>
     <div v-if="selectedBranch !== null" class="mx-6">
       <h2 class="font-bold mt-8 mb-2">Commit history</h2>
-      <CommitsList :commitsData="commitsData" />
+      <CommitsList :branchName="selectedBranch.name" />
     </div>
     <div v-else class="m-auto text-2xl text-center max-h-full">
       Select a repo branch.
@@ -45,39 +45,23 @@ export default {
       );
       branchesData.value = data;
     }
-    async function updateCommitsData() {
-      const { data } = await axios.get(
-        `https://api.github.com/repos/${process.env.VUE_APP_REPO_OWNER}/${process.env.VUE_APP_REPO_NAME}/commits`,
-        {
-          params: {
-            sha: selectedBranch.value.name,
-          },
-        }
-      );
-      commitsData.value = data;
-    }
 
     // Data
     const branchesData = ref([]);
     const selectedBranch = ref(null);
-    const commitsData = ref([]);
 
     // Methods
     function onBranchSelected(branchData) {
       selectedBranch.value = branchData;
-      updateCommitsData();
     }
 
     // Lifecycle Hooks
-    onMounted(() => {
-      updateBranches();
-    });
+    onMounted(() => updateBranches());
 
     return {
       // Data
       branchesData,
       selectedBranch,
-      commitsData,
       // Methods
       onBranchSelected,
     };

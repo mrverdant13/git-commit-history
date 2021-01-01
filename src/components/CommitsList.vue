@@ -11,6 +11,10 @@
 </template>
 
 <script>
+import { onMounted, ref } from "vue";
+
+import axios from "axios";
+
 import CommitTile from "../components/CommitTile";
 
 export default {
@@ -21,10 +25,34 @@ export default {
   },
 
   props: {
-    commitsData: {
-      type: Array,
+    branchName: {
+      type: String,
       required: true,
     },
+  },
+
+  setup(props) {
+    async function updateCommitsData() {
+      const { data } = await axios.get(
+        `https://api.github.com/repos/${process.env.VUE_APP_REPO_OWNER}/${process.env.VUE_APP_REPO_NAME}/commits`,
+        {
+          params: {
+            sha: props.branchName,
+          },
+        }
+      );
+      commitsData.value = data;
+    }
+
+    // Data
+    const commitsData = ref([]);
+
+    // Lifecycle Hooks
+    onMounted(() => updateCommitsData());
+
+    return {
+      commitsData,
+    };
   },
 };
 </script>
