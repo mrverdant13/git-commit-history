@@ -1,11 +1,7 @@
 <template>
-  <div class="flex flex-col h-screen bg-gray-900 text-white">
+  <div class="flex flex-col min-h-screen bg-gray-900 text-white">
     <AppHeader />
-    <div
-      class="flex-grow m-auto bg-gray-900 px-8 xl:max-w-screen-xl w-full text-white"
-    >
-      <router-view />
-    </div>
+    <router-view class="flex-grow w-full max-w-screen-xl m-auto px-8" />
   </div>
 </template>
 

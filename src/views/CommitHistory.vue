@@ -1,8 +1,5 @@
 <template>
-  <div
-    id="commit-history"
-    class="flex flex-col h-full m-auto pt-8 xl:max-w-screen-xl"
-  >
+  <div id="commit-history" class="flex flex-col mx-auto py-8">
     <h2 class="font-bold mb-2">Branch</h2>
     <div class="w-min">
       <Dropdown
@@ -16,9 +13,7 @@
       <h2 class="font-bold mt-8 mb-2">Commit history</h2>
       <CommitsList :branchName="selectedBranch.name" />
     </div>
-    <div v-else class="m-auto text-2xl text-center max-h-full">
-      Select a repo branch.
-    </div>
+    <div v-else class="m-auto text-2xl text-center">Select a repo branch.</div>
   </div>
 </template>
 

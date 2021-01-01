@@ -1,8 +1,6 @@
 <template>
   <div id="home" class="flex h-full w-full">
-    <div class="m-auto">
-      <h1 class="text-3xl">Home</h1>
-    </div>
+    <h1 class="m-auto text-3xl">Home</h1>
   </div>
 </template>
 
