@@ -1,8 +1,9 @@
 <template>
   <div id="commit-history" class="flex flex-col mx-auto py-8">
-    <h3 class="font-bold mb-2">Branch</h3>
+    <h3 v-if="!isLoadingBranches" class="font-bold mb-2">Branch</h3>
     <div class="w-min">
       <Dropdown
+        v-if="!isLoadingBranches"
         @item-selected="onBranchSelected"
         hint="branch"
         :items="branchesData"
