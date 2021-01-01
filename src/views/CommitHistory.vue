@@ -1,6 +1,6 @@
 <template>
   <div id="commit-history" class="flex flex-col mx-auto py-8">
-    <h2 class="font-bold mb-2">Branch</h2>
+    <h3 class="font-bold mb-2">Branch</h3>
     <div class="w-min">
       <Dropdown
         @item-selected="onBranchSelected"
@@ -9,11 +9,22 @@
         :itemLabelBuilder="(item) => item.name"
       />
     </div>
-    <div v-if="selectedBranch !== null" class="mx-6">
+    <h2
+      v-if="isLoadingBranches"
+      class="m-auto text-2xl text-center animate-pulse"
+    >
+      Loading branches...
+    </h2>
+    <h2
+      v-else-if="selectedBranch === null"
+      class="m-auto text-2xl text-center animate-bounce"
+    >
+      Select a repo branch.
+    </h2>
+    <div v-else>
       <h2 class="font-bold mt-8 mb-2">Commit history</h2>
       <CommitsList :branchName="selectedBranch.name" />
     </div>
-    <div v-else class="m-auto text-2xl text-center">Select a repo branch.</div>
   </div>
 </template>
 
@@ -35,13 +46,18 @@ export default {
 
   setup() {
     async function updateBranches() {
+      isLoadingBranches.value = true;
+
       const { data } = await axios.get(
         `https://api.github.com/repos/${process.env.VUE_APP_REPO_OWNER}/${process.env.VUE_APP_REPO_NAME}/branches`
       );
       branchesData.value = data;
+
+      isLoadingBranches.value = false;
     }
 
     // Data
+    const isLoadingBranches = ref(false);
     const branchesData = ref([]);
     const selectedBranch = ref(null);
 
@@ -55,6 +71,7 @@ export default {
 
     return {
       // Data
+      isLoadingBranches,
       branchesData,
       selectedBranch,
       // Methods
