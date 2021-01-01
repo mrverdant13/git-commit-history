@@ -24,7 +24,10 @@
     </h2>
     <div v-else>
       <h2 class="font-bold mt-8 mb-2">Commit history</h2>
-      <CommitsList :branchName="selectedBranch.name" />
+      <CommitsList
+        :branchName="selectedBranch.name"
+        :key="selectedBranch.name"
+      />
     </div>
   </div>
 </template>
