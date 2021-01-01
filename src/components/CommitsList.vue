@@ -2,7 +2,7 @@
   <div class="bg-gray-800 border border-gray-600 rounded">
     <h2
       v-if="isLoadingCommits"
-      class="mx-auto my-10 text-2xl text-center animate-pulse"
+      class="mx-4 my-10 text-2xl text-center animate-pulse"
     >
       Loading commits...
     </h2>
@@ -14,7 +14,7 @@
     >
       <CommitTile :commitData="commitData" />
     </div>
-    <h2 v-else class="mx-auto my-10 text-2xl text-center">No commits</h2>
+    <h2 v-else class="mx-4 my-10 text-2xl text-center">No commits</h2>
   </div>
 </template>
 
