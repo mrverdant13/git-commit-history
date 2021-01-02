@@ -1,20 +1,25 @@
 <template>
   <div class="bg-gray-800 border border-gray-600 rounded">
-    <h2
-      v-if="isLoadingCommits"
-      class="mx-4 my-10 text-2xl text-center animate-pulse"
-    >
-      Loading commits...
-    </h2>
     <div
-      v-else-if="commitsData.length > 0"
       v-for="commitData in commitsData"
       :key="commitData"
       class="border-b border-gray-600 px-4 py-2 last:border-0"
     >
       <CommitTile :commitData="commitData" />
     </div>
-    <h2 v-else class="mx-4 my-10 text-2xl text-center">No commits</h2>
+
+    <h2
+      v-if="isLoadingCommits"
+      class="mx-4 my-10 text-2xl text-center animate-pulse"
+    >
+      Loading commits...
+    </h2>
+    <h2
+      v-else-if="commitsData.length === 0"
+      class="mx-4 my-10 text-2xl text-center"
+    >
+      No commits
+    </h2>
   </div>
 </template>
 
@@ -40,21 +45,45 @@ export default {
   },
 
   setup(props) {
+    let nextPageUrl = `https://api.github.com/repos/${process.env.VUE_APP_REPO_OWNER}/${process.env.VUE_APP_REPO_NAME}/commits?sha=${props.branchName}`;
+
     async function updateCommitsData() {
+      if (isLoadingCommits.value || nextPageUrl === undefined) return;
+
       isLoadingCommits.value = true;
 
-      const { data } = await axios.get(
-        `https://api.github.com/repos/${process.env.VUE_APP_REPO_OWNER}/${process.env.VUE_APP_REPO_NAME}/commits`,
-        {
-          params: {
-            sha: props.branchName,
-          },
-        }
-      );
-      commitsData.value = data;
+      const { data, headers } = await axios.get(nextPageUrl);
+
+      commitsData.value = commitsData.value.concat(data);
+
+      const linksDataString = headers.link;
+
+      const linksData = {};
+      const linksDataArray = linksDataString.split(",");
+
+      for (const linkData of linksDataArray) {
+        const linkInfo = /<([^>]+)>;\s+rel="([^"]+)"/gi.exec(linkData);
+
+        linksData[linkInfo[2]] = linkInfo[1];
+      }
+
+      console.log(linksData);
+      nextPageUrl = linksData.next;
+      console.log(nextPageUrl);
 
       isLoadingCommits.value = false;
     }
+
+    window.onscroll = () => {
+      const bottomOfWindow =
+        document.documentElement.scrollTop + window.innerHeight >=
+        document.documentElement.offsetHeight - 5;
+
+      if (bottomOfWindow) {
+        console.log("Bottom!");
+        updateCommitsData();
+      }
+    };
 
     // Data
     const commitsData = ref([]);
