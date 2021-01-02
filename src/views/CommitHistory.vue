@@ -1,15 +1,13 @@
 <template>
   <div id="commit-history" class="flex flex-col mx-auto py-8">
     <h3 v-if="!isLoadingBranches" class="font-bold mb-2">Branch</h3>
-    <div class="w-min">
-      <Dropdown
-        v-if="!isLoadingBranches"
-        @item-selected="onBranchSelected"
-        hint="branch"
-        :items="branchesData"
-        :itemLabelBuilder="(item) => item.name"
-      />
-    </div>
+    <Dropdown
+      v-if="!isLoadingBranches"
+      @item-selected="onBranchSelected"
+      hint="branch"
+      :items="branchesData"
+      :itemLabelBuilder="(item) => item.name"
+    />
     <h2
       v-if="isLoadingBranches"
       class="m-auto text-2xl text-center animate-pulse"

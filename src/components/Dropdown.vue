@@ -1,7 +1,7 @@
 <template>
   <button
     @blur="itemsListIsOpen = false"
-    class="relative inline-block w-full rounded-md border border-gray-600 bg-gray-800 hover:bg-gray-700 focus:outline-none"
+    class="relative inline-block max-w-min rounded-md border border-gray-600 bg-gray-800 hover:bg-gray-700 focus:outline-none"
   >
     <div>
       <div
@@ -9,7 +9,7 @@
         class="inline-flex justify-between w-full px-4 py-2"
       >
         <p
-          class="text-sm text-left font-medium text-gray-300 overflow-ellipsis overflow-hidden"
+          class="text-sm text-left font-medium text-gray-300 truncate overflow-hidden"
         >
           {{ dropdownLabel }}
         </p>
