@@ -7,6 +7,7 @@
       hint="branch"
       :items="branchesData"
       :itemLabelBuilder="(item) => item.name"
+      class="z-10"
     />
     <h2
       v-if="isLoadingBranches"
