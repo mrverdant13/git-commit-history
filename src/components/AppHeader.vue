@@ -5,7 +5,7 @@
         v-for="route in $router.getRoutes()"
         :key="route.name"
         :to="route.path"
-        class="mx-2"
+        class="mx-2 hover:underline"
         >{{ route.name }}</router-link
       >
     </div>
