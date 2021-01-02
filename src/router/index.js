@@ -10,7 +10,7 @@ const routes = [
   },
   {
     path: '/commit-history',
-    name: 'CommitHistory',
+    name: 'Commit History',
     component: CommitHistory,
   },
 ]
