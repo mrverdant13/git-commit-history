@@ -67,9 +67,7 @@ export default {
         linksData[linkInfo[2]] = linkInfo[1];
       }
 
-      console.log(linksData);
       nextPageUrl = linksData.next;
-      console.log(nextPageUrl);
 
       isLoadingCommits.value = false;
     }
@@ -80,7 +78,6 @@ export default {
         document.documentElement.offsetHeight - 5;
 
       if (bottomOfWindow) {
-        console.log("Bottom!");
         updateCommitsData();
       }
     };
