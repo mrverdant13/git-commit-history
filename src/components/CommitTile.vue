@@ -38,7 +38,7 @@
     <button
       :title="`Copy ${commitSha} sha`"
       @click="copyShaToClipboard"
-      class="bg-gray-900 hover:bg-gray-700 invisible w-0 sm:w-auto sm:visible rounded-lg border border-gray-600 p-2 focus:outline-none"
+      class="bg-gray-900 hover:bg-gray-700 invisible w-0 sm:w-auto sm:visible rounded-lg border hover:border-blue-400 border-gray-600 p-2 focus:outline-none"
     >
       <p class="text-xs text-blue-400">
         {{ commitSha.substring(0, 6) }}
